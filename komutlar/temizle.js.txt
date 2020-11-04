@@ -1,0 +1,27 @@
+const Discord = require("discord.js");
+exports.run = function(client, message, args) {
+  if (!message.member.hasPermission("MANAGE_MESSAGES"))
+    return message.reply("Bu Komutu Kullanmak Ýçin Ýzniniz Yok!");
+  if (!args[0])
+    return message.channel.send(
+      "?? **Lütfen Silinicek Mesaj Miktarýný Yazýn.!** ??"
+    );
+  message.channel.bulkDelete(args[0]).then(() => {
+    message.channel
+      .send(` ${args[0]} Adet Mesajý Sildim. Burayý Çok Kirletmilsiniz`)
+      .then(msg => msg.delete(5000));
+  });
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: ["sil,t,s"],
+  permLevel: 2
+};
+
+exports.help = {
+  name: "temizle",
+  description: "Belirlenen miktarda mesajý siler.",
+  usage: "temizle <silinicek mesaj sayýsý>"
+};
